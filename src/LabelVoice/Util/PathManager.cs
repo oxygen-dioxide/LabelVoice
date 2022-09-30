@@ -75,66 +75,9 @@ namespace Labelvoice
         public bool HomePathIsAscii { get; private set; }
         public string PrefsFilePath => Path.Combine(DataPath, "prefs.json");
 
-        public string GetPartSavePath(string projectPath, int partNo)
-        {
-            var name = Path.GetFileNameWithoutExtension(projectPath);
-            var dir = Path.GetDirectoryName(projectPath);
-            Directory.CreateDirectory(dir);
-            return Path.Combine(dir, $"{name}-{partNo:D2}.ust");
-        }
-
-        public string GetExportPath(string exportPath, int trackNo)
-        {
-            var name = Path.GetFileNameWithoutExtension(exportPath);
-            var dir = Path.GetDirectoryName(exportPath);
-            Directory.CreateDirectory(dir);
-            return Path.Combine(dir, $"{name}-{trackNo:D2}.wav");
-        }
-
-        public void ClearCache()
-        {
-            var files = Directory.GetFiles(CachePath);
-            foreach (var file in files)
-            {
-                try
-                {
-                    File.Delete(file);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e, $"Failed to delete file {file}");
-                }
-            }
-            var dirs = Directory.GetDirectories(CachePath);
-            foreach (var dir in dirs)
-            {
-                try
-                {
-                    Directory.Delete(dir, true);
-                }
-                catch (Exception e)
-                {
-                    Log.Error(e, $"Failed to delete dir {dir}");
-                }
-            }
-        }
+        
 
         readonly static string[] sizes = { "B", "KB", "MB", "GB", "TB", "PB", "EB" };
-        public string GetCacheSize()
-        {
-            if (!Directory.Exists(CachePath))
-            {
-                return "0B";
-            }
-            var dir = new DirectoryInfo(CachePath);
-            double size = dir.GetFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
-            int order = 0;
-            while (size >= 1024 && order < sizes.Length - 1)
-            {
-                order++;
-                size = size / 1024;
-            }
-            return $"{size:0.##}{sizes[order]}";
-        }
+        
     }
 }
