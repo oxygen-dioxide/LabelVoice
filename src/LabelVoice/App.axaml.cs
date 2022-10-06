@@ -14,6 +14,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using Avalonia.Markup.Xaml.Styling;
 using DynamicData;
+using LabelVoice.Core.Managers;
+using LabelVoice.Core.Audio;
 
 namespace LabelVoice;
 
@@ -38,24 +40,40 @@ public class App : Application
     {
         AvaloniaXamlLoader.Load(this);
         InitializeCulture();
+        if (IsWin())
+        {
+            PlaybackManager.Instance.SetAudioBackend(AudioBackend.NAudio);
+        }
+        else
+        {
+            PlaybackManager.Instance.SetAudioBackend(AudioBackend.PortAudio);
+        }
     }
 
     public override void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            String mainWindow = "main";
+            //String mainWindow = "main";
             //String mainWindow = "wav";
-            if (mainWindow == "main")
+            string mainWindow = "player";
+            switch (mainWindow)
             {
-                desktop.MainWindow = new MainWindow
-                {
-                    DataContext = new MainWindowViewModel(),
-                };
-            }
-            else if (mainWindow == "wav")
-            {
-                desktop.MainWindow = new WavPlotWindow();
+                case "main":
+                    desktop.MainWindow = new MainWindow
+                    {
+                        DataContext = new MainWindowViewModel(),
+                    };
+                    break;
+                case "wav":
+                    desktop.MainWindow = new WavPlotWindow();
+                    break;
+                case "player":
+                    desktop.MainWindow = new AudioPlayerWindow
+                    {
+                        DataContext = new AudioPlayerWindowViewModel()
+                    };
+                    break;
             }
         }
 
