@@ -444,9 +444,6 @@ $RECYCLE.BIN/
 .idea/
 *.sln.iml
 
-# JetBrains Fleet
-.fleet/
-
 ##
 ## Visual Studio Code
 ##
@@ -455,10 +452,3 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-*.mp3
-*.pcm
-*.wav
-*.flac
-*.m4a
-*.aac

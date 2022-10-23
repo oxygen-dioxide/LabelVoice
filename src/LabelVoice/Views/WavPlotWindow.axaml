@@ -1,0 +1,32 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		x:Class="LabelVoice.Views.WavPlotWindow"
+		Title="WavPlot">
+
+	<Grid Name="layout" RowDefinitions="Auto,1*,1*" ColumnDefinitions="auto,1*,auto,auto,auto,auto">
+		<Button Name="btnSelectAndPlotWav"
+					Content="Select WAV"
+					Grid.Column="0"/>
+		<Button Name="btnSwitchColor"
+					Content="Switch color"
+					Grid.Column="2"/>
+		<TextBlock Text="{Binding UserColor}"
+				    Grid.Column="3"/>
+		<Button Name="btnSwitchMaxFreq"
+					Content="Change freq range"
+					Grid.Column="4"/>
+		<TextBlock Text="{Binding NowMaxFreq}"
+					Grid.Column="5"/>
+		<ScottPlot:AvaPlot Name="wavPlot" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="100"
+						   PointerWheelChanged="MonitorZoomLimit"
+						   AxesChanged="AxesChanged"/>
+		<ScottPlot:AvaPlot Name="specPlot" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="100"
+						   PointerWheelChanged="MonitorZoomLimit"
+						   AxesChanged="AxesChanged"/>
+	</Grid>
+
+</Window>

@@ -3,17 +3,63 @@
         xmlns:vm="using:LabelVoice.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:locale="using:LabelVoice.Locale"
+		xmlns:v="using:LabelVoice.Views"
+		xmlns:c="using:LabelVoice.Utils"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="LabelVoice.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="LabelVoice"
-        FontFamily="Microsoft YaHei UI">
+        DragDrop.AllowDrop="True"
+        xmlns:f="using:FluentAvalonia.UI.Controls">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+	<Design.DataContext>
+		<vm:MainWindowViewModel />
+	</Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+	<Grid Name="mainLayout" ColumnDefinitions="350,4,*">
+		<Grid
+		    Margin="8,8,0,8"
+			RowDefinitions="Auto, *, 4, *">
+			<Button Grid.Row="0" Name="btnGetProjectRoot" IsVisible="False"
+					Content="打开工程..." />
+			<v:ItemsPanel
+				x:Name="itemsPanel"
+				Grid.Row="1" />
+			<GridSplitter
+				Grid.Row="2"
+				HorizontalAlignment="Stretch" />
+			<v:SlicesPanel
+				x:Name="slicesPanel"
+				Grid.Row="3" />
+		</Grid>
+		<GridSplitter
+			Grid.Column="1"
+			Width="4"
+			VerticalAlignment="Stretch" />
+		<StackPanel Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+			<TextBlock Text="{DynamicResource mainwindow.greeting}" HorizontalAlignment="Center" />
+			<ComboBox
+                x:Name="LanguageBox"
+                MinWidth="140"
+                Margin="10"
+                HorizontalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                SelectedIndex="0"
+                SelectionChanged="SelectingItemsControl_OnSelectionChanged">
+				<ComboBoxItem Content="zh-CN" />
+				<ComboBoxItem Content="en-US" />
+				<ComboBoxItem Content="ja-JP" />
+				<ComboBoxItem Content="zh-TW" />
+			</ComboBox>
+			<TextBlock
+                Margin="10"
+                MaxWidth="400"
+                LineHeight="20"
+                Text="{DynamicResource mainwindow.testculture}"
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
+			<f:HyperlinkButton Content="1244"></f:HyperlinkButton>
+		</StackPanel>
+	</Grid>
 </Window>
